@@ -1,11 +1,11 @@
 import csv
 
-def read_csv(filename):
+def read_csv_input(filename):
     try:
         with open(filename, mode='r', newline='', encoding='utf-8') as file:
             reader = csv.reader(file)
             for row in reader:
-                print(row)   # Print each row
+                print(row)   # Print each row placehgolder for now
                 
     #ExceptionHandling
     except FileNotFoundError:
@@ -14,5 +14,5 @@ def read_csv(filename):
         print(f"An error occurred: {e}")
 
 # Read File path and call function
-csv_file = "data\data.csv"
-read_csv(csv_file)
+csv_file = "data\input.csv"
+read_csv_input(csv_file)

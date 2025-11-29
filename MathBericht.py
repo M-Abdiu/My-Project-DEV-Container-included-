@@ -2,18 +2,16 @@
 
 #Math Stundenrechnung
 def Math_Stundenrechnung():
-    #Vars
+    #Vars from CSV //Placeholders
     EintrittsStempel = 8.00
     AustrittsStempel = 18.00
     EintrittsPause = 12.00
     AustrittsPause = 13.00
-    AnzahlArbeitsStunden = 0.0
-    AnzahlPausenStunden = 0.0
-    EffektivArbeitsStunden = 0.0
     
-    #VarChanges
+    #Vars used for Calc
     AnzahlArbeitsStunden  = AustrittsStempel - EintrittsStempel
     AnzahlPausenStunden = AustrittsPause - EintrittsPause
+    
     EffektivArbeitsStunden = AnzahlArbeitsStunden - AnzahlPausenStunden
 
     return EffektivArbeitsStunden, AnzahlPausenStunden
@@ -21,13 +19,12 @@ def Math_Stundenrechnung():
 
 #Check Vetragsbedingung
 def Vertragsbedingungen(EffektivArbeitsStunden, AnzahlPausenStunden):
-    #Vars
-    Pensum = 1.0
+    #MaxVars per Week // change to daily
     MaxStunden = 42.0
-    MaxPausenAnzahl = 5.0
-    Vertragsverletzung = False
-    EffektivArbeitsStunden
-    AnzahlPausenStunden
+    MaxPausenAnzahl = 5.0    
+    
+    # Var from CSV
+    Pensum = 1.0
     
     #Check Conditions of Vars
     if EffektivArbeitsStunden >MaxStunden * Pensum or AnzahlPausenStunden > MaxPausenAnzahl:

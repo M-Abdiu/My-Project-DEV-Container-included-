@@ -6,7 +6,7 @@ def read_csv_input(filename):
         with open(filename, mode="r", newline="", encoding="utf-8") as file:
             reader = csv.reader(file)
             daten = val_arbeitszeiten(reader)
-            print(daten)          # <--- Ausgabe der kompletten gesammelten Daten
+            print(daten)                                   # <--- Ausgabe der kompletten gesammelten Daten
     except FileNotFoundError:
         print("Error, Datei nicht gefunden:", filename)
     except Exception as e:
@@ -14,15 +14,15 @@ def read_csv_input(filename):
 
 def val_arbeitszeiten(reader):
     personen = []
-    aktuelle_person = None   # Platzhalter im moment 
+    aktuelle_person = None   # Platzhalter
 
     for row in reader:       # leere Zeilen überspringen
         if not row:
             continue
 
-        neue_row = []                   # felder mit strip() bereinigen
+        neue_row = []                   
         for feld in row:
-            neue_row.append(feld.strip())
+            neue_row.append(feld.strip())   # felder mit strip() bereinigen
         row = neue_row
 
         if len(row) == 0:

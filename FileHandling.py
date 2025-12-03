@@ -46,8 +46,8 @@ def val_arbeitszeiten(reader):
                 return None
 
             tag = row[0]
-            WOCHENTAGE = ["Montag","Dienstag","Mittwoch","Donnerstag","Freitag"]
-            WOCHENENDE = ["Samstag", "Sonntag"]
+            WOCHENTAGE = ("Montag","Dienstag","Mittwoch","Donnerstag","Freitag")
+            WOCHENENDE = ("Samstag", "Sonntag")
             if tag in WOCHENTAGE:
                 pass
             

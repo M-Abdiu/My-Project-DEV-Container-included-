@@ -1,5 +1,5 @@
-Berisha,Linda,80
-Montag,07.15,12.00,13.00,17.00
+Berisha,Linda,100
+Montag,07.00,12.00,13.00,17.00
 Dienstag,07.30,12.30,13.00,17.30
 Mittwoch,06.45,11.45,12.30,16.30
 Donnerstag,07.10,12.10,13.00,17.20
@@ -20,11 +20,11 @@ Donnerstag,06.40,11.40,12.30,16.20
 Freitag,05.30,10.30,11.15,17.00
 
 Hunziker,Mia,50
-Montag,13.00,18.45
-Dienstag,12.30,18.30
-Mittwoch,13.15,18.55
-Donnerstag,13.00,18.30
-Freitag,12.00,16.00
+Montag,13.00,18.45,00.00,00.00
+Dienstag,12.30,18.30,00.00,00.00
+Mittwoch,13.15,18.55,00.00,00.00
+Donnerstag,13.00,18.30,00.00,00.00
+Freitag,12.00,16.00,00.00,00.00
 
 Mustermann,Max,100
 Montag,07.00,12.00,13.00,17.00

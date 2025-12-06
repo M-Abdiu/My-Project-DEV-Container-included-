@@ -1,62 +1,80 @@
 import csv
 
 
-def read_csv_input(filename):
+def read_csv_input(filename):                   #Funktion zum lesen des CSV Dokuments und zum aufrufen der anderen Funktionen
     try:
-        with open(filename, mode="r", newline="", encoding="utf-8") as file:
-            reader = csv.reader(file)
-            daten = val_arbeitszeiten(reader)
-            print(daten)          # <--- Ausgabe der kompletten gesammelten Daten
+        with open(filename, mode="r", newline="", encoding="utf-8") as file:        #"utf-8" kommt aus dem csv-Modul, zum korrekten Lesen der Daten. 
+            reader = csv.reader(file)                                               # .reader kommt ebenfalls direkt als funktion aus dem CSV-Modul 
+            daten = val_arbeitszeiten(reader)                                       # 
+            if daten is not None:
+                print(daten)                                   #Ausgabe der kompletten gesammelten Daten
+
     except FileNotFoundError:
         print("Error, Datei nicht gefunden:", filename)
     except Exception as e:
         print("Es ist ein Fehler aufgetreten:", e)
 
 def val_arbeitszeiten(reader):
-    personen = []
-    aktuelle_person = None   # Platzhalter im moment 
+    mitarbeiter = []
+    aktuelle_person = None  
 
     for row in reader:       # leere Zeilen überspringen
         if not row:
             continue
 
-        neue_row = []                   # felder mit strip() bereinigen
+        neue_row = []                   
         for feld in row:
-            neue_row.append(feld.strip())
+            neue_row.append(feld.strip())    # felder von Leerzeichen bereinigen
         row = neue_row
 
-        if len(row) == 0:
+        if len(row) == 0:                      # Zeilen ohne Daten ignorieren
             continue
 
         if len(row) == 3 and row[2].isdigit():                   # Mitarbeiterzeile: Nachname, Vorname, Pensum
             nachname = row[0]
             vorname = row[1]
             pensum = int(row[2])
-            personen.append([nachname, vorname, pensum, []])  
-            aktuelle_person = personen[-1]                    
+            mitarbeiter.append([nachname, vorname, pensum, []])  
+            aktuelle_person = mitarbeiter[-1]  
+
             if pensum < 0 or pensum > 100:
-                print("Pensum falsch bei", aktuelle_person,":", pensum)
+                print("Pensum falsch bei", nachname, vorname,":", pensum)
+                return None
         else:
             if aktuelle_person is None:                         # kontrollieren ob es einen Namen gibt
                 print("Arbeitszeile ohne Person:", row)
-                continue
+                return None
 
             tag = row[0]
-            WOCHENTAGE = ["Montag","Dienstag","Mittwoch","Donnerstag","Freitag"]
-            if tag not in WOCHENTAGE:
-                print("Tag falsch bei", aktuelle_person,":", tag)
+            WOCHENTAGE = ("Montag","Dienstag","Mittwoch","Donnerstag","Freitag")
+            WOCHENENDE = ("Samstag", "Sonntag")
+            if tag in WOCHENTAGE:
+                pass
+            
+            elif tag in WOCHENENDE:
+                print("ACHTUNG!: ",  nachname, vorname, "hat am Wochenendtag:", tag, "gearbeitet!")
+                pass                                                                                 #Auch wenn am Wochenende gearbeiet wurde, werden die Zeiten weitergegeben, damit man dies in der Überprüfung der Rahmenbedingungen anmerken kann. 
+
+            else:
+                print("Tag falsch bei",  nachname, vorname,":", tag) 
+                return None
+            
+            if len(row) != 5: 
+                print("Flasche Anzahl Zeit-Einträge bei",  nachname, vorname, "am", tag, ",erwartet sind 4 Einträge (Wenn kein Eintrag bitte '00.00' eingeben)")
+                return None
             
             aktuelle_person[3].append(row)
 
             for zeit in row[1:]:                                 # alle Zeiten in dieser Zeile prüfen
                 if not ist_gueltige_zeit(zeit):
-                    print("Zeit falsch bei", aktuelle_person, tag,":", zeit)
+                    print("Zeit falsch bei",  nachname, vorname, "am", tag,":", zeit)
+                    return None
 
-    return personen
+    return mitarbeiter
 
 
 
-def ist_gueltige_zeit(zeit):
+def ist_gueltige_zeit(zeit):                #Check ob Zeiten möglich sind 
     teile = zeit.split(".")
     if len(teile) != 2:
         return False

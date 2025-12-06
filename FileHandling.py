@@ -72,3 +72,4 @@ def ist_gueltige_zeit(zeit):
 
 csv_file = r"data\Stempelzeiten KW_XX.csv"
 read_csv_input(csv_file)
+

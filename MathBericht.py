@@ -1,31 +1,40 @@
-#Get CSV Data
 
+
+    
 #Math Stundenrechnung
-def Math_Stundenrechnung():
-    #Vars from CSV //Placeholders
-    EintrittsStempel = 8.00
-    AustrittsStempel = 18.00
-    EintrittsPause = 12.00
-    AustrittsPause = 13.00
+def Math_Stundenrechnung(datapoints):
+    #Get CSV Data
+    from FileHandling  import read_csv_input
+    csv_file = r"data\Stempelzeiten KW_XX.csv"
+    datapoints=read_csv_input(csv_file)
+    loopInt = 0
     
-    #Vars used for Calc
-    AnzahlArbeitsStunden  = AustrittsStempel - EintrittsStempel
-    AnzahlPausenStunden = AustrittsPause - EintrittsPause
+    while loopInt < len(datapoints):
+        #Vars from CSV 
+        EintrittsStempel = datapoints[4]
+        AustrittsStempel = datapoints[7]
+        EintrittsPause = datapoints[5]
+        AustrittsPause = datapoints[6]
+        Pensum = datapoints[2]
+        
+        #Vars used for Calc
+        AnzahlArbeitsStunden  = AustrittsStempel - EintrittsStempel
+        AnzahlPausenStunden = AustrittsPause - EintrittsPause
     
-    EffektivArbeitsStunden = AnzahlArbeitsStunden - AnzahlPausenStunden
+        EffektivArbeitsStunden = AnzahlArbeitsStunden - AnzahlPausenStunden
+        loopInt = loopInt + 1
 
     return EffektivArbeitsStunden, AnzahlPausenStunden
-    
+
+
+
 
 #Check Vetragsbedingung
-def Vertragsbedingungen(EffektivArbeitsStunden, AnzahlPausenStunden):
-    #MaxVars per Week // change to daily
+def Vertragsbedingungen(EffektivArbeitsStunden, AnzahlPausenStunden,Pensum):
+    #MaxVars per Week 
     MaxStunden = 42.0
     MaxPausenAnzahl = 5.0    
-    
-    # Var from CSV
-    Pensum = 1.0
-    
+        
     #Check Conditions of Vars
     if EffektivArbeitsStunden >MaxStunden * Pensum or AnzahlPausenStunden > MaxPausenAnzahl:
         Vertragsverletzung = True
@@ -35,11 +44,6 @@ def Vertragsbedingungen(EffektivArbeitsStunden, AnzahlPausenStunden):
         return Vertragsverletzung 
 
 #Run
-EffektivArbeitsStunden, AnzahlPausenStunden = Math_Stundenrechnung()
-print(AnzahlPausenStunden)
-print(EffektivArbeitsStunden)
-Vertragsverletzung = Vertragsbedingungen(EffektivArbeitsStunden, AnzahlPausenStunden )
-print(Vertragsverletzung)
-
-
+#Math_Stundenrechnung(datapoints) 
+print(Math_Stundenrechnung())
     

@@ -5,7 +5,7 @@ def read_csv_input(filename):                   #Funktion zum lesen des CSV Doku
     try:
         with open(filename, mode="r", newline="", encoding="utf-8") as file:        #"utf-8" kommt aus dem csv-Modul, zum korrekten Lesen der Daten. 
             reader = csv.reader(file)                                               # .reader kommt ebenfalls direkt als funktion aus dem CSV-Modul 
-            daten = val_arbeitszeiten(reader)                                       # 
+            daten = val_arbeitszeiten(reader)                                       
             if daten is not None:
                 print(daten)                                   #Ausgabe der kompletten gesammelten Daten
 

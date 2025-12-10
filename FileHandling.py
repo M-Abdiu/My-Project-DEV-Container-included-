@@ -215,6 +215,7 @@ if __name__ == "__main__":
         print()  # Leerzeile zur Trennung
         print()  # Leerzeile zur Trennung
         print("Übersicht:")
+        print("-----------------------------------")  
         print()  # Leerzeile zur Trennung
         math_stundenrechnung(datapoints)
     else:

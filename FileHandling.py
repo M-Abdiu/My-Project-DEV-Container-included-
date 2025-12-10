@@ -141,6 +141,8 @@ def math_stundenrechnung(mitarbeiter):
 
             gesamt_effektiv += effektiv
             gesamt_pausen += pausenstunden
+    
+
 
         print(f"{nachname} {vorname} ({pensum}% Pensum):")
         print(f"  Effektive Arbeitsstunden: {gesamt_effektiv:.2f} h")
@@ -193,7 +195,7 @@ def vertragsbedingungen(gesamt_effektiv, gesamt_pausen, pensum,tag):
 # Run
 if __name__ == "__main__":
     #CSV-Pfad eintragen
-    csv_file = "Data\Stempelzeiten KW_XX.csv"
+    csv_file = input("Bitte Dateinamen eingeben, welche ausgewertet werden soll. (z.B.: Data\ Stempelzeiten KW_XX.csv): ")
     datapoints = read_csv_input(csv_file)
 
     if datapoints is not None:

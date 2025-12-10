@@ -17,7 +17,7 @@ def read_csv_input(filename):  # Funktion zum Lesen des CSV-Dokuments und zum Au
         print("Error, Datei nicht gefunden:", filename)
         return None
     except Exception as e:
-        print("Es ist ein Fehler aufgetreten:", e)
+        print("Es ist ein Fehler aufgetreten: ", e)
         return None
 
 

@@ -7,6 +7,7 @@ def read_csv_input(filename):  # Funktion zum Lesen des CSV-Dokuments und zum Au
             reader = csv.reader(file)
             daten = val_arbeitszeiten(reader)
             if daten is not None:
+                print("-----------------------------------")
                 print("Eingelesene Datenstruktur:")
                 print(daten)
                 print("-----------------------------------")
@@ -65,6 +66,7 @@ def val_arbeitszeiten(reader):
                 pass
             elif tag in wochenende:
                 print("ACHTUNG!: ", nachname, vorname, "hat am Wochenendtag:", tag, "gearbeitet!")
+                print()  # Leerzeile zur Trennung
                 # trotzdem weitergeben
             else:
                 print("Tag falsch bei", nachname, vorname, ":", tag)
@@ -127,6 +129,8 @@ def math_stundenrechnung(mitarbeiter):
 
         gesamt_effektiv = 0.0
         gesamt_pausen = 0.0
+        soll_zeit = 0.0
+        differenz_std = 0.0
 
         for tag, eintritt, pause_start, pause_ende, austritt in tage:
             # Zeiten von "HH.MM" in Stunden umrechnen
@@ -141,12 +145,21 @@ def math_stundenrechnung(mitarbeiter):
 
             gesamt_effektiv += effektiv
             gesamt_pausen += pausenstunden
+            soll_zeit = 42.0 * pensum / 100
+            differenz_std = gesamt_effektiv - soll_zeit
     
 
 
         print(f"{nachname} {vorname} ({pensum}% Pensum):")
         print(f"  Effektive Arbeitsstunden: {gesamt_effektiv:.2f} h")
-        print(f"  Pausenstunden gesamt:     {gesamt_pausen:.2f} h")
+        print(f"  Soll-Zeit:                {soll_zeit:.2f} h")
+        if differenz_std > 0.0:
+            print(f"  Differnz-Zeit:            +{differenz_std:.2f} h")
+        elif differenz_std == 0.0:
+            print(f"  Differnz-Zeit:            {differenz_std:.2f} h")
+        else:
+            print(f"  Differnz-Zeit:            {differenz_std:.2f} h")
+        print(f"  Pausenstunden gesamt:      {gesamt_pausen:.2f} h")
 
         verletzung = vertragsbedingungen(gesamt_effektiv, gesamt_pausen, pensum, tag)
         if verletzung:
@@ -195,10 +208,14 @@ def vertragsbedingungen(gesamt_effektiv, gesamt_pausen, pensum,tag):
 # Run
 if __name__ == "__main__":
     #CSV-Pfad eintragen
-    csv_file = input("Bitte Dateinamen eingeben, welche ausgewertet werden soll. (z.B.: Data\ Stempelzeiten KW_XX.csv): ")
+    csv_file = input("Bitte Dateipfad der CSV Datei eingeben, welche ausgewertet werden soll: ")
     datapoints = read_csv_input(csv_file)
 
     if datapoints is not None:
+        print()  # Leerzeile zur Trennung
+        print()  # Leerzeile zur Trennung
+        print("Übersicht:")
+        print()  # Leerzeile zur Trennung
         math_stundenrechnung(datapoints)
     else:
         print("Keine Daten eingelesen – keine Berechnung möglich.")

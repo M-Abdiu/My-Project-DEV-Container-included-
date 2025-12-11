@@ -218,5 +218,6 @@ if __name__ == "__main__":
         print("-----------------------------------")  
         print()  # Leerzeile zur Trennung
         math_stundenrechnung(datapoints)
+        print("Ende der Liste")
     else:
         print("Keine Daten eingelesen – keine Berechnung möglich.")

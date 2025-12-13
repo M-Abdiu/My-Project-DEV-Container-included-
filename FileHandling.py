@@ -116,8 +116,11 @@ def ist_gueltige_zeit(zeit):
     teile = zeit.split(".")
     if len(teile) != 2:
         return False
+    if len(teile[0]) != 2 or len(teile[1] != 2):
+        return False
     if not teile[0].isdigit() or not teile[1].isdigit():
         return False
+    
     stunden = int(teile[0])
     minuten = int(teile[1])
     if stunden < 0 or stunden > 23:

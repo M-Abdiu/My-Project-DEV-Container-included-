@@ -79,8 +79,8 @@ def val_arbeitszeiten(reader):
                     vorname,
                     "am",
                     tag,
-                    ", erwartet sind 4 Einträge (Wenn kein Eintrag bitte '00.00' eingeben)",
-                )
+                    ", erwartet sind 4 Einträge (Wenn kein Eintrag bitte '00.00' eingeben)")
+                
                 return None
 
             # row = [tag, eintritt, austritt, pause_start, pause_ende]
@@ -147,11 +147,11 @@ def math_stundenrechnung(mitarbeiter):
         print(f"  Effektive Arbeitsstunden: {gesamt_effektiv:.2f} h")
         print(f"  Soll-Zeit:                {soll_zeit:.2f} h")
         if differenz_std > 0.0:
-            print(f"  Differnz-Zeit:            +{differenz_std:.2f} h")
+            print(f"  Differenz-Zeit:            +{differenz_std:.2f} h")
         elif differenz_std == 0.0:
-            print(f"  Differnz-Zeit:            {differenz_std:.2f} h")
+            print(f"  Differenz-Zeit:            {differenz_std:.2f} h")
         else:
-            print(f"  Differnz-Zeit:            {differenz_std:.2f} h")
+            print(f"  Differenz-Zeit:            {differenz_std:.2f} h")
         print(f"  Pausenstunden gesamt:      {gesamt_pausen:.2f} h")
 
         verletzung = vertragsbedingungen(gesamt_effektiv, gesamt_pausen, pensum, tag)

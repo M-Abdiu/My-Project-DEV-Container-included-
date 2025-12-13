@@ -15,17 +15,20 @@ This project is intended to:
 ## 📝 Analysis
 
 **Problem**
-Das Problem ist, dass der Vorgesetzte ein File erhält in den alle Mitarbeiter ihre gestempelten Zeiten eintragen. Er möchte eine Übersicht haben über die jeweiligen Mitarbeiter, in der gezeigt ist: Mitarbeiter, Überstunden, Minusstunden, Pensum, Einhaltung der Rahmenbedinungen und dies nicht immer manuell berechnen müssen. 
+
+Das Problem ist, dass der Vorgesetzte ein File erhält in dem alle Mitarbeiter ihre gestempelten Zeiten eintragen. Er muss immer manuell berechnen, wie lange die Mitarbeiter gearbeitet haben und schauen, ob sie die vertraglichen Rahmenbedingungen nicht verletzt haben. Er möchte eine Übersicht haben über die jeweiligen Mitarbeiter, in der gezeigt ist: Mitarbeiter, Pensum, Ist-Zeit, Zoll-Zeit, Differenz-Stunden, Einhaltung der Rahmenbedinungen und Falls verletzt, Welche Rahmenbedingung verletzt wurde und dies nicht immer manuell berechnen müssen. 
 
 
 **Scenario**
 Der User will eine Übersicht über die Überstunden haben, indem ein File importiert, welches die wöchentliche Stemplungen der Mitarbeiter beinhaltet. Schlussendlich soll er als Output eine Übersicht erhalten in der aufgeführt ist:
-- Mitarbeiter
-- Pensum
-- Anzahl Überstunden
-- Anzahl Minuststunden
-- Vertragliche Rahmenbedingungen eingehalten
-- Falls eine Rahmenbedingunge nicht eingehalten wurde soll diese aufgelistet werden.
+- Nachname, Vorname, Pensum
+- Effektivstunden
+- Soll-Stunden
+- Differenz-zeit
+- Pausen-Stunden
+- Vertragsbedingungen eingehalten?
+- Begründung der Vertrags-Verletzung
+
 
 **User stories:**
 1. Als User möchte ich, eine CSV-Datei einlesen können, in der die Mitarbeiter ihre Zeitstempelungen für diese Woche + ihr Pensum aufgeführt haben.
@@ -33,7 +36,7 @@ Der User will eine Übersicht über die Überstunden haben, indem ein File impor
 3. Als User möchte ich, eine Übersicht der Minusstunden jedes einzelnen Mitarbeiters erhalten.
 4. Als User möchte ich, eine Angabe des Pensums des Mitarbeiters erhalten.
 5. Als User möchte ich, die Arbeitszeiteinhaltung an dem Pensum angepasst des Mitarbeiters erhalten. (Max 48h = 100%)
-6. Als User möchte ich, eine Angabe erhalten ob die, von der vertraglichen Rahmenbedingungen wurden.
+6. Als User möchte ich, eine Angabe erhalten ob die vertraglichen Rahmenbedingungen eingehalten wurden.
 7. Als User möchte ich, eine Angabe kriegen wenn eine Rahmenbedingung nicht eingehalten wurde und eine Begründung, welche nicht eingehalten wurde.
 
 **Use cases:**

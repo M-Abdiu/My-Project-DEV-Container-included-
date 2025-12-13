@@ -4,7 +4,8 @@ import csv
 def read_csv_input(filename): 
     """
     Diese Funktion ist dazu da, das File, welches sich im Dateipfad der Eingabe befindet, versuchen zu öffnen.
-    Auch wird die Funktion zur Validierung der Zeit (ob alles korrekt eingegeben wurde) aufgerufen und es wird wiedergegeben, ob es einen Fehler beim Aufruf gibt oder nicht.  
+    Auch wird die Funktion zur Validierung der Zeit (ob alles korrekt eingegeben wurde) aufgerufen 
+    und es wird wiedergegeben, ob es einen Fehler beim Aufruf gibt oder nicht.  
     """
 
     try:
@@ -29,8 +30,10 @@ def read_csv_input(filename):
 
 def val_arbeitszeiten(reader):
     """
-    Diese Funktion validiert, ob die eingelesenen Daten, Fehler enthalten und gibt, falls ein Fehler aufkommt, zurück wo der Fehler liegt.
-    Die kontrollierten Werte werden direkt in Listen gespeichert, damit man sie nachher in der Berechnung verwenden kann. 
+    Diese Funktion validiert, ob die eingelesenen Daten, Fehler enthalten 
+    und gibt, falls ein Fehler aufkommt, zurück wo der Fehler liegt.
+    Die kontrollierten Werte werden direkt in Listen gespeichert, 
+    damit man sie nachher in der Berechnung verwenden kann. 
     Eine weitere Funktion, zur genaueren Überprüfung der Zeitangaben wird aufgerufen.  
     """
     mitarbeiter = []
@@ -68,11 +71,11 @@ def val_arbeitszeiten(reader):
             vorname = aktuelle_person[1]
 
             tag = row[0]
-            wochentage = ("Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag")
-            wochenende = ("Samstag", "Sonntag")
-            if tag in wochentage:
+            WOCHENTAGE = ("Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag")
+            WOCHENENDE = ("Samstag", "Sonntag")
+            if tag in WOCHENTAGE:
                 pass
-            elif tag in wochenende:                                 #Auch wenn am Wochenende gearbeitet wurde, Werte weitergeben!
+            elif tag in WOCHENENDE:                                      # Auch wenn am Wochenende gearbeitet wurde, Werte weitergeben!
                 print()             
                 print("ACHTUNG!: ", nachname, vorname, "hat am Wochenendtag:", tag, "gearbeitet!") 
                 print()  
@@ -82,7 +85,7 @@ def val_arbeitszeiten(reader):
                 return None
 
             if len(row) != 5:
-                print("Falsche Anzahl Zeit-Einträge bei",nachname,vorname,"am",tag,", erwartet sind 4 Einträge (Wenn kein Eintrag bitte '00.00' eingeben)")
+                print("Falsche Anzahl Zeit-Einträge bei", nachname, vorname, "am", tag, ", erwartet sind 4 Einträge (Wenn kein Eintrag bitte '00.00' eingeben)")
                 
                 return None
 
@@ -94,15 +97,19 @@ def val_arbeitszeiten(reader):
                     print("Zeit falsch bei", nachname, vorname, "am", tag, ":", zeit)
                     return None
                 
+
             letzte = None
 
             for zeit in row[1:]:
                 if zeit == "00.00":
                     continue
 
+
                 if letzte is not None and zeit < letzte:
                     print("Anfangszeit später als Endzeit, bei", nachname, vorname, "am", tag)
                     return None
+                
+                letzte = zeit
 
 
 
@@ -111,12 +118,13 @@ def val_arbeitszeiten(reader):
 
 def ist_gueltige_zeit(zeit):
     """
-    Diese Funktion überprüft, dass die Zeiten auch tatsächlich möglich sind und die richtige Länge haben. 
+    Diese Funktion überprüft, dass die Zeiten auch tatsächlich möglich sind 
+    und die richtige Länge haben. 
     """
     teile = zeit.split(".")
     if len(teile) != 2:
         return False
-    if len(teile[0]) != 2 or len(teile[1] != 2):
+    if len(teile[0]) != 2 or len(teile[1]) != 2:
         return False
     if not teile[0].isdigit() or not teile[1].isdigit():
         return False
@@ -135,7 +143,8 @@ def math_stundenrechnung(mitarbeiter):
     """
     Hier werden die übergebenen Daten verrechnet, um auf die Ziel-Werte zu kommen. 
     Die Funktion zeit_zu_stunden wird aufgerufen, um die Zeiten auch miteinander verrechnen zu können. 
-    Damit man drucken kann, ob vertraglich abgemachte Rahmenbedingungen verletzt wurden, wird die Funktion vertragsbedingungen aufgerufen.
+    Damit man drucken kann, ob vertraglich abgemachte Rahmenbedingungen verletzt wurden, 
+    wird die Funktion vertragsbedingungen aufgerufen.
     Die Übersicht wird in die Konsole gedruckt. 
     """
     if mitarbeiter is None:

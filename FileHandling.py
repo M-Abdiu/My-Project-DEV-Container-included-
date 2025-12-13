@@ -164,7 +164,8 @@ def math_stundenrechnung(mitarbeiter):
         verletzung = vertragsbedingungen(gesamt_effektiv, gesamt_pausen, pensum, tag)
         if verletzung:
             print("  -> Vertragsbedingungen: VERLETZT")
-            print("  -> Begründung: " + verletzung[1])
+            print("  -> Begründung: ")
+            print("  ->",', '.join(map(str, verletzung[1])))
         else:
             print("  -> Vertragsbedingungen: OK")
         print()  # Leerzeile zur Trennung
@@ -182,27 +183,27 @@ def vertragsbedingungen(gesamt_effektiv, gesamt_pausen, pensum,tag):
     
     # tuple für Überprüfung von wert variable tag
     wochenende = ("Samstag", "Sonntag")
+    loop = 0
     
     # Case 1: Effektive Arbeitsstunden sind grösser als Max erlaubte Stunden anhand Pensumfaktor
-    if (
-        gesamt_effektiv > max_stunden * pensum_faktor
-    ):
-        begründung = "Unerlaubte Überstunden"
-        return True,begründung
     # Case 2: Pausenstunden sind grösser als Max erlaubte Pausen Anzahl
-    elif(
-        gesamt_pausen > max_pausen_anzahl
-    ):
-        begründung = "Unerlaubte Pausenstunden"
-        return True,begründung
     # Case 3: Variable tag beinhaltet Samstag oder Sonntag
-    elif(
-        tag in wochenende
-    ):
-        begründung = "Unerlaubte Wochenendarbeit"
+    while loop <= 3:
+        begründung = []
+        if (gesamt_effektiv > max_stunden * pensum_faktor):
+            begründung.append("Unerlaubte Überstunden")
+            loop + 1
+        if(gesamt_pausen > max_pausen_anzahl):
+            begründung.append("Unerlaubte Pausenstunde")
+            loop + 1
+        if(tag in wochenende):
+            begründung.append("Unerlaubte Wochenendarbeit")
+            loop + 1
+        else:
+            loop = 3
+            return False
         return True,begründung
-    else:
-        return False
+   
 
 
 # Run

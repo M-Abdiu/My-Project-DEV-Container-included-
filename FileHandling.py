@@ -29,9 +29,9 @@ def read_csv_input(filename):
 
 def val_arbeitszeiten(reader):
     """
-    Diese Funktion validert, ob die eingelesenen Daten, Fehler enthalten und gibt, falls ein Fehler aufkommt, zurück wo der Fehler liegt.
-    Die kontrollierten Werte werden direkt in Listen gespeichert, damit man sie nacher in der Berechnung verwenden kann. 
-    Eine weitere Funktion, zur genaueren Überprüfung der Zeit Angaben wird aufgerufen.  
+    Diese Funktion validiert, ob die eingelesenen Daten, Fehler enthalten und gibt, falls ein Fehler aufkommt, zurück wo der Fehler liegt.
+    Die kontrollierten Werte werden direkt in Listen gespeichert, damit man sie nachher in der Berechnung verwenden kann. 
+    Eine weitere Funktion, zur genaueren Überprüfung der Zeitangaben wird aufgerufen.  
     """
     mitarbeiter = []
     aktuelle_person = None

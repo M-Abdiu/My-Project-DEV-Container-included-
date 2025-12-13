@@ -38,6 +38,8 @@ def val_arbeitszeiten(reader):
     """
     mitarbeiter = []
     aktuelle_person = None
+    WOCHENTAGE = ("Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag")
+    WOCHENENDE = ("Samstag", "Sonntag")
 
     for row in reader:                                         # leere Zeilen überspringen
         if not row:
@@ -71,8 +73,8 @@ def val_arbeitszeiten(reader):
             vorname = aktuelle_person[1]
 
             tag = row[0]
-            WOCHENTAGE = ("Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag")
-            WOCHENENDE = ("Samstag", "Sonntag")
+
+
             if tag in WOCHENTAGE:
                 pass
             elif tag in WOCHENENDE:                                      # Auch wenn am Wochenende gearbeitet wurde, Werte weitergeben!
@@ -89,21 +91,34 @@ def val_arbeitszeiten(reader):
                 
                 return None
 
-            aktuelle_person[3].append(row)
+            tag, eintritt, pause_start, pause_ende, austritt = row
+            aktuelle_person[3].append([tag, eintritt, pause_start, pause_ende, austritt])
 
+            zeiten = [eintritt, pause_start, pause_ende, austritt]
 
-            for zeit in row[1:]:
+            for zeit in zeiten:
                 if not ist_gueltige_zeit(zeit):
                     print("Zeit falsch bei", nachname, vorname, "am", tag, ":", zeit)
                     return None
-                
+
+            
+            if (pause_start == "00.00") != (pause_ende == "00.00"):
+                print("Pause unvollständig bei", nachname, vorname, "am", tag)
+                return None  
+            
+            if eintritt == "00.00" and not (pause_start == "00.00" and pause_ende == "00.00" and austritt == "00.00"):
+                print("Eintritt fehlt bei", nachname, vorname, "am", tag)
+                return None
+            
+            if austritt == "00.00" and eintritt != "00.00":
+                print("Austritt fehlt bei", nachname, vorname, "am", tag)
+                return None
+
 
             letzte = None
-
-            for zeit in row[1:]:
+            for zeit in zeiten:
                 if zeit == "00.00":
                     continue
-
 
                 if letzte is not None and zeit < letzte:
                     print("Anfangszeit später als Endzeit, bei", nachname, vorname, "am", tag)
@@ -159,7 +174,16 @@ def math_stundenrechnung(mitarbeiter):
         soll_zeit = 0.0
         differenz_std = 0.0
 
+        WOCHENENDE = ("Samstag", "Sonntag")
+        hat_wochenende = False
+
         for tag, eintritt, pause_start, pause_ende, austritt in tage:
+            if eintritt == "00.00" and pause_start == "00.00" and pause_ende == "00.00" and austritt == "00.00":
+                continue
+
+            if tag in WOCHENENDE:
+                hat_wochenende = True
+
             eintritt_h = zeit_zu_stunden(eintritt)
             pause_start_h = zeit_zu_stunden(pause_start)
             pause_ende_h = zeit_zu_stunden(pause_ende)
@@ -187,11 +211,11 @@ def math_stundenrechnung(mitarbeiter):
             print(f"  Differenz-Zeit:            {differenz_std:.2f} h")
         print(f"  Pausenstunden gesamt:      {gesamt_pausen:.2f} h")
 
-        verletzung = vertragsbedingungen(gesamt_effektiv, gesamt_pausen, pensum, tag)
+        verletzung = vertragsbedingungen(gesamt_effektiv, gesamt_pausen, pensum, hat_wochenende)
         if verletzung:
             print("  -> Vertragsbedingungen: VERLETZT")
             print("  -> Begründung: ")
-            print("  ->",', '.join(map(str, verletzung[1])))
+            print("  ->" , ", ".join(map(str, verletzung[1])))
         else:
             print("  -> Vertragsbedingungen: OK")
         print()
@@ -210,7 +234,7 @@ def zeit_zu_stunden(zeit_str):
     return stunden + minuten / 60.0
 
 
-def vertragsbedingungen(gesamt_effektiv, gesamt_pausen, pensum,tag):
+def vertragsbedingungen(gesamt_effektiv, gesamt_pausen, pensum, hat_wochenende):
     """
     Diese Funktion ist dazu da, dass man überprüft, ob und welche Rahmenbedingungen verletzt wurden und dies an die Stundenrechnung zurückgeben kann.
     """
@@ -220,25 +244,23 @@ def vertragsbedingungen(gesamt_effektiv, gesamt_pausen, pensum,tag):
     pensum_faktor = pensum / 100.0
     
 
-    WOCHENENDE = ("Samstag", "Sonntag")
-    loop = 0
-    
+    begründung = [] 
 
-    while loop <= 3:
-        begründung = []
-        if (gesamt_effektiv > max_stunden * pensum_faktor):
-            begründung.append("Unerlaubte Überstunden")
-            loop + 1
-        if(gesamt_pausen > max_pausen_anzahl):
-            begründung.append("Unerlaubte Pausenstunde")
-            loop + 1
-        if(tag in WOCHENENDE):
-            begründung.append("Unerlaubte Wochenendarbeit")
-            loop + 1
-        else:
-            loop = 3
-            return False
-        return True,begründung
+    if gesamt_effektiv > max_stunden * pensum_faktor:
+        begründung.append("Unerlaubte Überstunden")
+
+    if gesamt_pausen > max_pausen_anzahl:
+        begründung.append("Unerlaubte Pausenstunden")
+
+    if hat_wochenende:
+        begründung.append("Unerlaubte Wochenendarbeit")
+
+    if begründung:
+        return True, begründung
+    
+    return False
+
+
    
 
 

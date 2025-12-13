@@ -41,6 +41,7 @@ Der User will eine Übersicht über die Überstunden haben, indem ein File impor
 
 **Use cases:**
 - Input des Files mit allen Angaben der Mitarbeiter eingeben.
+- Filepath eingeben, des Files welches man auswerten will
 - Das Programm durchlaufen lassen und die Daten sollen validiert werden. 
 - Output wird als Übersichtsausgabe in der Konsole ausgegeben.
 

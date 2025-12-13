@@ -1,6 +1,5 @@
 # Arbeitszeit-Auswertungs Programm
 
-
 This project is intended to:
 
 - Practice the complete process from **problem analysis to implementation**
@@ -20,25 +19,27 @@ Das Problem ist, dass der Vorgesetzte ein File erhält in den alle Mitarbeiter i
 
 
 **Scenario**
-Der User will eine Übersicht über die Überstunden haben, indem er das File importiert. Schlussendlich soll er als Output eine Übersicht erhalten in der aufgeführt ist:
+Der User will eine Übersicht über die Überstunden haben, indem ein File importiert, welches die wöchentliche Stemplungen der Mitarbeiter beinhaltet. Schlussendlich soll er als Output eine Übersicht erhalten in der aufgeführt ist:
 - Mitarbeiter
 - Pensum
 - Anzahl Überstunden
 - Anzahl Minuststunden
 - Vertragliche Rahmenbedingungen eingehalten
+- Falls eine Rahmenbedingunge nicht eingehalten wurde soll diese aufgelistet werden.
 
 **User stories:**
-1. Als User möchte ich, eine CSV oder Excel Datei einlesen können, in der die Mitarbeiter ihre Zeitstempelungen + Pensum aufgeführt haben. 
-2. Als User möchte ich, eine Übersicht der Überstunden des Mitarbeiters erhalten. 
-3. Als User möchte ich, eine Übersicht der Minusstunden des Mitarbeitrs erhalten.
-4. Als User möchte ich, eine Angabe der Pensums des Mitarbeiters erhalten. 
-5. Als User möchte ich, eine Angabe erhalten ob die, von der Organisation gegebenen, Rahmenbedingungen eingehalten wurden.  
-
+1. Als User möchte ich, eine CSV-Datei einlesen können, in der die Mitarbeiter ihre Zeitstempelungen für diese Woche + ihr Pensum aufgeführt haben.
+2. Als User möchte ich, eine Übersicht der Überstunden jedes einzelnen Mitarbeiters erhalten.
+3. Als User möchte ich, eine Übersicht der Minusstunden jedes einzelnen Mitarbeiters erhalten.
+4. Als User möchte ich, eine Angabe des Pensums des Mitarbeiters erhalten.
+5. Als User möchte ich, die Arbeitszeiteinhaltung an dem Pensum angepasst des Mitarbeiters erhalten. (Max 48h = 100%)
+6. Als User möchte ich, eine Angabe erhalten ob die, von der vertraglichen Rahmenbedingungen wurden.
+7. Als User möchte ich, eine Angabe kriegen wenn eine Rahmenbedingung nicht eingehalten wurde und eine Begründung, welche nicht eingehalten wurde.
 
 **Use cases:**
-- Input des Files mit allen Angaben der Mitarbeiter.
+- Input des Files mit allen Angaben der Mitarbeiter eingeben.
 - Das Programm durchlaufen lassen und die Daten sollen validiert werden. 
-- Output wird als Übersichts Datei ausgegeben.
+- Output wird als Übersichtsausgabe in der Konsole ausgegeben.
 
 ---
 
@@ -55,7 +56,7 @@ Each app must meet the following three criteria in order to be accepted (see als
 ### 1. Interactive App (Console Input)
 
 Der User Startet das Programm. 
-Das Programm interagiert mit dem User in dem der User die CSV oder Excel Datei in das Programm einliest.
+Das Programm interagiert mit dem User in dem der User die CSV-File in das Programm einliest.
  
 
 ---
@@ -65,14 +66,15 @@ Das Programm interagiert mit dem User in dem der User die CSV oder Excel Datei i
 
 Das Programm muss überprüfen ob die angegebenen Daten korrekt sind:
 - Ist der Mitarbeiter ein Name. 
-- Sind die Timestamps korrekte Zeiten. Im richtigen Format und möglich.  
+- Sind die Timestamps korrekte Zeiten. Im richtigen Format und überhaupt möglich.  
 - Ist das Pensum >0 und <100.
+- Ist die maximal Arbeitszeit am Pensum angepasst und validiert mit dieser die Arbeitsstunden
 
 
 ### 3. File Processing
 
-Das Programm liest die Daten, in dem es das Input CSV oder Excel File verwendet. 
-Das Programm gibt Daten aus, in dem es die berechneten Resultate (Mitarbeiter, Überstunden, Minusstunden, Pensum, Rahmenbedinungen) in einem Output file als Übersicht ausgibt. 
+Das Programm liest die Daten, in dem es das Input CSV-File verwendet. 
+Das Programm gibt Daten aus, in dem es die berechneten Resultate (Mitarbeiter, Überstunden, Minusstunden, Pensum, Rahmenbedinungen) in einem Output in der Konsole als Übersicht ausgibt. 
 
 ## ⚙️ Implementation
 
@@ -82,11 +84,10 @@ Das Programm gibt Daten aus, in dem es die berechneten Resultate (Mitarbeiter, �
 
 ### 📂 Repository Structure
 ```text
-PizzaRP/
-├── main.py             # Main Programm
-├── input.csv			# Input File, mit Mitarbeiter, Pensum, Timestamps
-├── output.csv			# Output FIle, mit Mitarbeiter, Überstunden, Minusstunden, Pensum, Rahmenbedinungen
-└── README.md           # Projektbeschrieb und Meilensteine
+My-Project-DEV-Container-included-/
+├── Data\Stempelzeiten KW_XX.csv		# Input File, mit Mitarbeiter, Pensum, Timestamps
+├── Filehandling.py						# Verarbeitung der Daten und Output Generierung
+└── README.md          	 				# Projektbeschrieb und Meilensteine
 ```
 
 ### How to Run
@@ -95,7 +96,7 @@ PizzaRP/
 2. Open the **Terminal**
 3. Run:
 	```bash
-	python3 main.py
+	python3 FileHandling.py
 	```
 
 1. Öffnen des reposotory in **GitHub Codespaces**
@@ -103,23 +104,23 @@ PizzaRP/
 3. Öffnen des Terminals.
 3. Run:
 	```bash
-	python3 main.py
+	python3 FileHandling.py
 	```
 
 ### Libraries Used
 
-- Openpyxl für excel verarbeitung
+- CSV für CSV Verarbeitung
 
 
 ## 👥 Team & Contributions
 
 > 🚧 Fill in the names of all team members and describe their individual contributions below. Each student should be responsible for at least one part of the project.
 
-| Name       		| Contribution                                 	|
-|------------		|----------------------------------------------	|
-| Denis Silva		|												|
-| Mehmedali Abdiu 	|									            |
-| Antoine Vaillant  |												|
+| Name       		| Contribution                                 			|
+|------------		|------------------------------------------------------	|
+| Denis Silva		|Stundenberechnung und Validierung, Rahmenbedingungen	|
+| Mehmedali Abdiu 	|CSV Einlesung und Validierung						 	|
+
 
 
 ## 🤝 Contributing

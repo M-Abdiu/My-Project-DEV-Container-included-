@@ -125,7 +125,7 @@ My-Project-DEV-Container-included-/
 | Name       		| Contribution                                 			  |
 |------------		|-----------------------------------------------------|
 | Denis Silva		|Stundenberechnung und Validierung, Rahmenbedingungen, überarbeitung ReadME und Funktions_hierachiebaum, erstellung der Präsentation	|
-| Mehmedali Abdiu 	|CSV Einlesung und Validierung, erstellung des ReadME, erstellung des ReadMe und Funktions_hierachiebaum, Docstrings im Code, Besprechnungstermine organisieren						 	      |
+| Mehmedali Abdiu 	|CSV Einlesung und Validierung, erstellung des ReadMe und Funktions_hierachiebaum, überarbeitung Präsentation, Docstrings im Code, Besprechnungstermine organisieren						 	      |
 
 
 

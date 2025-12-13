@@ -109,13 +109,6 @@ def ist_gueltige_zeit(zeit):  # Check ob Zeiten möglich sind
         return False
     return True
 
-# Methode für Konvertierung der Werte 00.00 in 0.0 Stunden
-def zeit_zu_stunden(zeit_str):
-    stunden_str, minuten_str = zeit_str.split(".")
-    stunden = int(stunden_str)
-    minuten = int(minuten_str)
-    return stunden + minuten / 60.0
-
 
 # Methode für Berechnung der Arbeitseinträge der Mitarbeiter + Ausgabe der Werten in Konsole.
 def math_stundenrechnung(mitarbeiter):
@@ -170,6 +163,14 @@ def math_stundenrechnung(mitarbeiter):
         print()  # Leerzeile zur Trennung
         print("-----------------------------------")    
         print()  # Leerzeile zur Trennung
+
+
+# Methode für Konvertierung der Werte 00.00 in 0.0 Stunden
+def zeit_zu_stunden(zeit_str):
+    stunden_str, minuten_str = zeit_str.split(".")
+    stunden = int(stunden_str)
+    minuten = int(minuten_str)
+    return stunden + minuten / 60.0
 
 # Methode für Überprüfung ob Rahmenmbedingungen eines Vertrages gebrochen wurden.
 def vertragsbedingungen(gesamt_effektiv, gesamt_pausen, pensum,tag):

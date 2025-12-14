@@ -98,8 +98,11 @@ My-Project-DEV-Container-included-/
 └── README.md          	 				# Projektbeschrieb und Meilensteine
 ```
 
+<<<<<<< HEAD
 ### How to Run
 
+=======
+>>>>>>> 38fbbbcb790e553bd8aee4f270f4c28fe4ed1a2f
 1. Öffnen des reposotory in **GitHub Codespaces**
 2. Input File in das Reposotory einfügen. 
 3. Öffnen des Terminals.
@@ -121,7 +124,7 @@ My-Project-DEV-Container-included-/
 
 | Name       		| Contribution                                 			  |
 |------------		|-----------------------------------------------------|
-| Denis Silva		|Stundenberechnung und Validierung, Rahmenbedingungen, überarbeitung ReadME und Funktions_hierachiebaum, erstellung der Präsentation	|
+| Denis Silva		|Stundenberechnung und Validierung, Rahmenbedingungen, überarbeitung ReadME und Funktions_hierachiebaum, Erstellung der Präsentation	|
 | Mehmedali Abdiu 	|CSV Einlesung und Validierung, erstellung des ReadMe und Funktions_hierachiebaum, überarbeitung Präsentation, Docstrings im Code, Besprechnungstermine organisieren						 	      |
 
 

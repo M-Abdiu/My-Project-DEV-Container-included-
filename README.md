@@ -76,7 +76,8 @@ Das Programm muss überprüfen ob die angegebenen Daten korrekt sind:
 - Sind die Timestamps korrekte Zeiten. Im richtigen Format und überhaupt möglich.  
 - Ist das Pensum >0 und <100.
 - Jeder User hat 4 Timestamps pro Tag (00:00 bei leeren Eingaben)
-- Der Filepath der Usereingabe existiert
+- Jeder User kann nur einen Tag gestempelt haben (!= 2 x Montag)
+- Der Filepath der Usereingabe existiert.
 - Wurden die Vertragsbedingungen verletzt. 
 
 

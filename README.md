@@ -20,6 +20,7 @@ Das Problem ist, dass der Vorgesetzte ein File erhält in dem alle Mitarbeiter i
 
 
 **Scenario**
+
 Der User will eine Übersicht über die Stunden haben, indem ein er ein File importiert, welches die wöchentliche Stemplungen der Mitarbeiter beinhaltet. Schlussendlich soll er als Output in der Konsole, eine Übersicht erhalten in der aufgeführt ist:
 - Nachname, Vorname, Pensum
 - Effektivstunden
@@ -31,19 +32,21 @@ Der User will eine Übersicht über die Stunden haben, indem ein er ein File imp
 
 
 **User stories:**
-1. Als User möchte ich, eine CSV-Datei einlesen können, in der die Mitarbeiter ihr Pensum und ihre Zeitstempelungen für diese Woche aufgeführt haben.
+1. Als User möchte ich, eine CSV-Datei einlesen können, in der die Mitarbeiter ihr Pensum und ihre Zeitstempelungen für eine Woche aufgeführt haben.
 2. Als User möchte ich, eine Übersicht der Soll-Zeit jedes einzelnen Mitarbeiters erhalten.
 3. Als User möchte ich, eine Übersicht der Differenz-Zeit jedes einzelnen Mitarbeiters erhalten.
 4. Als User möchte ich, eine Angabe des Pensums des Mitarbeiters erhalten.
-5. Als User möchte ich, die Arbeitszeiteinhaltung an dem Pensum angepasst des Mitarbeiters erhalten. (Max 48h = 100%)
-6. Als User möchte ich, eine Angabe erhalten ob die vertraglichen Rahmenbedingungen eingehalten wurden.
-7. Als User möchte ich, eine Angabe kriegen wenn eine Rahmenbedingung nicht eingehalten wurde und eine Begründung, welche nicht eingehalten wurde.
+5. Als User möchte ich, bei Fehlern in der CSV-Datei, eine Information erhalten wo der Fehler ist und diese anpassen können. 
+6. Als User möchte ich, die Arbeitszeiteinhaltung an dem Pensum angepasst des Mitarbeiters erhalten. (Max 48h = 100%)
+7. Als User möchte ich, eine Angabe erhalten ob die vertraglichen Rahmenbedingungen eingehalten wurden.
+8. Als User möchte ich, gegebenenfalls eine Angabe erhalten welche Rahmenbedingung verletzt wurde.
 
 **Use cases:**
-- Input des Files mit allen Angaben der Mitarbeiter eingeben.
+- Speichern des Files mit Stempelungen der Mitarbeiter.
 - Filepath, des Files welches man auswerten will, eingeben. 
-- Das Programm durchlaufen lassen (Daten sollen validiert werden). 
-- Output wird als Übersichtsausgabe in der Konsole ausgegeben.
+- Das Programm durchlaufen lassen. 
+- Bei Fehlern im File, erhalte ich die Information, wo der Fehler liegt. Dieser muss dann korrigiert werden. Dann das Programm wieder durchlaufen lassen.
+- Output wird als Übersicht in der Konsole ausgegeben.
 
 ---
 
@@ -72,7 +75,7 @@ Das Programm muss überprüfen ob die angegebenen Daten korrekt sind:
 - Ist der Mitarbeiter ein Name. 
 - Sind die Timestamps korrekte Zeiten. Im richtigen Format und überhaupt möglich.  
 - Ist das Pensum >0 und <100.
-- Ist die maximal Arbeitszeit am Pensum angepasst und validiert mit dieser die Arbeitsstunden
+- Wurden die Vertragsbedingungen verletzt. 
 
 
 ### 3. File Processing
@@ -89,20 +92,13 @@ Das Programm gibt Daten aus, in dem es die berechneten Resultate (Mitarbeiter, �
 ### 📂 Repository Structure
 ```text
 My-Project-DEV-Container-included-/
-├── Data\Stempelzeiten KW_XX.csv		# Input File, mit Mitarbeiter, Pensum, Timestamps
+├── Data\Stempelzeiten KW_**.csv		# Input File, mit Mitarbeiter, Pensum, Timestamps
 ├── Filehandling.py						# Verarbeitung der Daten und Output Generierung
 ├── Funktions_hierachiebaum.pptv		# Wie die Funktionen zusammenarbeiten
 └── README.md          	 				# Projektbeschrieb und Meilensteine
 ```
 
 ### How to Run
-
-1. Open the repository in **GitHub Codespaces**
-2. Open the **Terminal**
-3. Run:
-	```bash
-	python3 FileHandling.py
-	```
 
 1. Öffnen des reposotory in **GitHub Codespaces**
 2. Input File in das Reposotory einfügen. 
@@ -112,6 +108,7 @@ My-Project-DEV-Container-included-/
 	python3 FileHandling.py
 	```
 5. Filepath in das Terminal schreiben
+6. Im Terminal die Übersicht erhalten. 
 
 ### Libraries Used
 

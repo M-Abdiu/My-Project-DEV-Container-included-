@@ -74,6 +74,13 @@ def val_arbeitszeiten(reader):
 
             tag = row[0]
 
+            bereits_erfasste_tage = [eintrag[0] for eintrag in aktuelle_person[3]]
+
+            if tag in bereits_erfasste_tage:
+                print("Tag doppelt erfasst bei", nachname, vorname, ":", tag)
+                return None
+
+
 
             if tag in WOCHENTAGE:
                 pass

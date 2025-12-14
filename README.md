@@ -75,6 +75,9 @@ Das Programm muss überprüfen ob die angegebenen Daten korrekt sind:
 - Ist der Mitarbeiter ein Name. 
 - Sind die Timestamps korrekte Zeiten. Im richtigen Format und überhaupt möglich.  
 - Ist das Pensum >0 und <100.
+- Jeder User hat 4 Timestamps pro Tag (00:00 bei leeren Eingaben)
+- Jeder User kann nur einen Tag gestempelt haben (!= 2 x Montag)
+- Der Filepath der Usereingabe existiert.
 - Wurden die Vertragsbedingungen verletzt. 
 
 
@@ -92,10 +95,11 @@ Das Programm gibt Daten aus, in dem es die berechneten Resultate (Mitarbeiter, �
 ### 📂 Repository Structure
 ```text
 My-Project-DEV-Container-included-/
-├── Data\Stempelzeiten KW_**.csv		# Input File, mit Mitarbeiter, Pensum, Timestamps
-├── Filehandling.py						# Verarbeitung der Daten und Output Generierung
-├── Funktions_hierachiebaum.pptv		# Wie die Funktionen zusammenarbeiten
-└── README.md          	 				# Projektbeschrieb und Meilensteine
+├── Data\Stempelzeiten KW_**.csv			# Input File, mit Mitarbeiter, Pensum, Timestamps
+├── Filehandling.py							# Verarbeitung der Daten und Output Generierung
+├── Funktions_hierachiebaum.pptx			# Wie die Funktionen zusammenarbeiten
+├── Arbeitszeit-Auswertungsprogram.pptx		# Präsentation für die Applikation
+└── README.md          	 					# Projektbeschrieb und Meilensteine
 ```
 
 ### How to Run
@@ -119,10 +123,10 @@ My-Project-DEV-Container-included-/
 
 > 🚧 Fill in the names of all team members and describe their individual contributions below. Each student should be responsible for at least one part of the project.
 
-| Name       		| Contribution                                 			  |
-|------------		|-----------------------------------------------------|
-| Denis Silva		|Stundenberechnung und Validierung, Rahmenbedingungen, überarbeitung ReadME und Funktions_hierachiebaum, Erstellung der Präsentation	|
-| Mehmedali Abdiu 	|CSV Einlesung und Validierung, erstellung des ReadMe und Funktions_hierachiebaum, überarbeitung Präsentation, Docstrings im Code, Besprechnungstermine organisieren						 	      |
+| Name       		| Contribution                                 			  																											|
+|------------		|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Denis Silva		|Stundenberechnung und Validierung, Rahmenbedingungen, Überarbeitung ReadME und Funktions_hierachiebaum, Erstellung der Präsentation								|
+| Mehmedali Abdiu 	|CSV Einlesung und Validierung, Erstellung des ReadMe und Funktions_hierachiebaum, Überarbeitung Präsentation, Docstrings im Code, Besprechnungstermine organisieren|
 
 
 

@@ -95,8 +95,10 @@ Das Programm gibt Daten aus, in dem es die berechneten Resultate (Mitarbeiter, �
 ### 📂 Repository Structure
 ```text
 My-Project-DEV-Container-included-/
-├── Data\Stempelzeiten KW_**.csv			# Input File, mit Mitarbeiter, Pensum, Timestamps
-├── Filehandling.py							# Verarbeitung der Daten und Output Generierung
+├── Data
+	└─────────Stempelzeiten KW_XX.csv		# Input File, Stempelungen
+	└─────────Stempelzeiten KW_XY.csv		# Input File, Stempelungen
+├── Filehandling.py							# Verarbeitung der Daten und Output
 ├── Funktions_hierachiebaum.pptx			# Wie die Funktionen zusammenarbeiten
 ├── Arbeitszeit-Auswertungsprogram.pptx		# Präsentation für die Applikation
 └── README.md          	 					# Projektbeschrieb und Meilensteine
@@ -121,7 +123,6 @@ My-Project-DEV-Container-included-/
 
 ## 👥 Team & Contributions
 
-> 🚧 Fill in the names of all team members and describe their individual contributions below. Each student should be responsible for at least one part of the project.
 
 | Name       		| Contribution                                 			  																											|
 |------------		|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -132,8 +133,6 @@ My-Project-DEV-Container-included-/
 
 ## 🤝 Contributing
 
-> 🚧 This is a template repository for student projects.  
-> 🚧 Do not change this section in your final submission.
 
 - Use this repository as a starting point by importing it into your own GitHub account.  
 - Work only within your own copy — do not push to the original template.  

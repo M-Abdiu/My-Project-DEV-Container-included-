@@ -41,13 +41,13 @@ def val_arbeitszeiten(reader):
     WOCHENTAGE = ("Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag")
     WOCHENENDE = ("Samstag", "Sonntag")
 
-    for row in reader:                                         # leere Zeilen überspringen
+    for row in reader:
         if not row:
             continue
 
         neue_row = []
         for feld in row:
-            neue_row.append(feld.strip())                      # Felder von Leerzeichen bereinigen
+            neue_row.append(feld.strip())
         row = neue_row
 
         if len(row) == 0:

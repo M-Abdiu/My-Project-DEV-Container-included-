@@ -75,7 +75,7 @@ Das Programm muss überprüfen ob die angegebenen Daten korrekt sind:
 - Ist der Mitarbeiter ein Name. 
 - Sind die Timestamps korrekte Zeiten. Im richtigen Format und überhaupt möglich.  
 - Ist das Pensum >0 und <100.
-- Jeder User hat 4 Timestamps mit je 5 Einträgen. (00:00 bei leeren Eingaben)
+- Jeder User hat 4 Timestamps pro Tag (00:00 bei leeren Eingaben)
 - Der Filepath der Usereingabe existiert
 - Wurden die Vertragsbedingungen verletzt. 
 

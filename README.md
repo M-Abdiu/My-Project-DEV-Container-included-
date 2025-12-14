@@ -16,24 +16,24 @@ This project is intended to:
 
 **Problem**
 
-Das Problem ist, dass der Vorgesetzte ein File erhält in dem alle Mitarbeiter ihre gestempelten Zeiten eintragen. Er muss immer manuell berechnen, wie lange die Mitarbeiter gearbeitet haben und schauen, ob sie die vertraglichen Rahmenbedingungen nicht verletzt haben. Er möchte eine Übersicht haben über die jeweiligen Mitarbeiter, in der gezeigt ist: Mitarbeiter, Pensum, Ist-Zeit, Zoll-Zeit, Differenz-Stunden, Einhaltung der Rahmenbedinungen und Falls verletzt, Welche Rahmenbedingung verletzt wurde und dies nicht immer manuell berechnen müssen. 
+Das Problem ist, dass der Vorgesetzte ein File erhält in dem alle Mitarbeiter ihre gestempelten Zeiten eintragen und er muss immer alles manuell berechnen. Er muss berechnen wie lange die Mitarbeiter gearbeitet haben und schauen, ob sie die vertraglichen Rahmenbedingungen verletzt haben. Er möchte eine Übersicht haben über die jeweiligen Mitarbeiter, in der gezeigt wird: Mitarbeiter, Pensum, Ist-Zeit, Soll-Zeit, Differenz-Stunden, Einhaltung der Rahmenbedinungen und falls verletzt, Welche Rahmenbedingung verletzt wurde und dies nicht immer manuell berechnen müssen. 
 
 
 **Scenario**
-Der User will eine Übersicht über die Überstunden haben, indem ein File importiert, welches die wöchentliche Stemplungen der Mitarbeiter beinhaltet. Schlussendlich soll er als Output eine Übersicht erhalten in der aufgeführt ist:
+Der User will eine Übersicht über die Stunden haben, indem ein er ein File importiert, welches die wöchentliche Stemplungen der Mitarbeiter beinhaltet. Schlussendlich soll er als Output in der Konsole, eine Übersicht erhalten in der aufgeführt ist:
 - Nachname, Vorname, Pensum
 - Effektivstunden
-- Soll-Stunden
-- Differenz-zeit
-- Pausen-Stunden
+- Soll-Zeit
+- Differenz-Zeit
+- Pausen-Zeit
 - Vertragsbedingungen eingehalten?
 - Begründung der Vertrags-Verletzung
 
 
 **User stories:**
-1. Als User möchte ich, eine CSV-Datei einlesen können, in der die Mitarbeiter ihre Zeitstempelungen für diese Woche + ihr Pensum aufgeführt haben.
-2. Als User möchte ich, eine Übersicht der Überstunden jedes einzelnen Mitarbeiters erhalten.
-3. Als User möchte ich, eine Übersicht der Minusstunden jedes einzelnen Mitarbeiters erhalten.
+1. Als User möchte ich, eine CSV-Datei einlesen können, in der die Mitarbeiter ihr Pensum und ihre Zeitstempelungen für diese Woche aufgeführt haben.
+2. Als User möchte ich, eine Übersicht der Soll-Zeit jedes einzelnen Mitarbeiters erhalten.
+3. Als User möchte ich, eine Übersicht der Differenz-Zeit jedes einzelnen Mitarbeiters erhalten.
 4. Als User möchte ich, eine Angabe des Pensums des Mitarbeiters erhalten.
 5. Als User möchte ich, die Arbeitszeiteinhaltung an dem Pensum angepasst des Mitarbeiters erhalten. (Max 48h = 100%)
 6. Als User möchte ich, eine Angabe erhalten ob die vertraglichen Rahmenbedingungen eingehalten wurden.
@@ -41,7 +41,8 @@ Der User will eine Übersicht über die Überstunden haben, indem ein File impor
 
 **Use cases:**
 - Input des Files mit allen Angaben der Mitarbeiter eingeben.
-- Das Programm durchlaufen lassen und die Daten sollen validiert werden. 
+- Filepath, des Files welches man auswerten will, eingeben. 
+- Das Programm durchlaufen lassen (Daten sollen validiert werden). 
 - Output wird als Übersichtsausgabe in der Konsole ausgegeben.
 
 ---
@@ -59,7 +60,7 @@ Each app must meet the following three criteria in order to be accepted (see als
 ### 1. Interactive App (Console Input)
 
 Der User Startet das Programm. 
-Das Programm interagiert mit dem User in dem der User die CSV-File in das Programm einliest.
+Das Programm interagiert mit dem User in dem der User den Filepath der CSV-Datei in das Programm eingibt.
  
 
 ---
@@ -90,11 +91,12 @@ Das Programm gibt Daten aus, in dem es die berechneten Resultate (Mitarbeiter, �
 My-Project-DEV-Container-included-/
 ├── Data\Stempelzeiten KW_XX.csv		# Input File, mit Mitarbeiter, Pensum, Timestamps
 ├── Filehandling.py						# Verarbeitung der Daten und Output Generierung
+├── Funktions_hierachiebaum.pptv		# Wie die Funktionen zusammenarbeiten
 └── README.md          	 				# Projektbeschrieb und Meilensteine
 ```
 
 ### How to Run
-> 🚧 Adjust if needed.
+
 1. Open the repository in **GitHub Codespaces**
 2. Open the **Terminal**
 3. Run:
@@ -105,10 +107,11 @@ My-Project-DEV-Container-included-/
 1. Öffnen des reposotory in **GitHub Codespaces**
 2. Input File in das Reposotory einfügen. 
 3. Öffnen des Terminals.
-3. Run:
+4. Run:
 	```bash
 	python3 FileHandling.py
 	```
+5. Filepath in das Terminal schreiben
 
 ### Libraries Used
 
@@ -121,8 +124,8 @@ My-Project-DEV-Container-included-/
 
 | Name       		| Contribution                                 			  |
 |------------		|-----------------------------------------------------|
-| Denis Silva		|Stundenberechnung und Validierung, Rahmenbedingungen	|
-| Mehmedali Abdiu 	|CSV Einlesung und Validierung						 	      |
+| Denis Silva		|Stundenberechnung und Validierung, Rahmenbedingungen, überarbeitung ReadME und Funktions_hierachiebaum, erstellung der Präsentation	|
+| Mehmedali Abdiu 	|CSV Einlesung und Validierung, erstellung des ReadMe und Funktions_hierachiebaum, überarbeitung Präsentation, Docstrings im Code, Besprechnungstermine organisieren						 	      |
 
 
 

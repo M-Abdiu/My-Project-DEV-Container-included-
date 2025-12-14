@@ -1,7 +1,13 @@
 import csv
 
 
-def read_csv_input(filename):  # Funktion zum Lesen des CSV-Dokuments und zum Aufrufen der anderen Funktionen
+def read_csv_input(filename): 
+    """
+    Diese Funktion ist dazu da, das File, welches sich im Dateipfad der Eingabe befindet, versuchen zu öffnen.
+    Auch wird die Funktion zur Validierung der Zeit (ob alles korrekt eingegeben wurde) aufgerufen 
+    und es wird wiedergegeben, ob es einen Fehler beim Aufruf gibt oder nicht.  
+    """
+
     try:
         with open(filename, mode="r", newline="", encoding="utf-8") as file:
             reader = csv.reader(file)
@@ -11,7 +17,7 @@ def read_csv_input(filename):  # Funktion zum Lesen des CSV-Dokuments und zum Au
                 print("Eingelesene Datenstruktur:")
                 print(daten)
                 print("-----------------------------------")
-            # WICHTIG: Ergebnis zurückgeben
+
             return daten
 
     except FileNotFoundError:
@@ -23,23 +29,31 @@ def read_csv_input(filename):  # Funktion zum Lesen des CSV-Dokuments und zum Au
 
 
 def val_arbeitszeiten(reader):
+    """
+    Diese Funktion validiert, ob die eingelesenen Daten, Fehler enthalten 
+    und gibt, falls ein Fehler aufkommt, zurück wo der Fehler liegt.
+    Die kontrollierten Werte werden direkt in Listen gespeichert, 
+    damit man sie nachher in der Berechnung verwenden kann. 
+    Eine weitere Funktion, zur genaueren Überprüfung der Zeitangaben wird aufgerufen.  
+    """
     mitarbeiter = []
     aktuelle_person = None
+    WOCHENTAGE = ("Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag")
+    WOCHENENDE = ("Samstag", "Sonntag")
 
-    for row in reader:  # leere Zeilen überspringen
+    for row in reader:                                         # leere Zeilen überspringen
         if not row:
             continue
 
         neue_row = []
         for feld in row:
-            neue_row.append(feld.strip())  # Felder von Leerzeichen bereinigen
+            neue_row.append(feld.strip())                      # Felder von Leerzeichen bereinigen
         row = neue_row
 
-        if len(row) == 0:  # Zeilen ohne Daten ignorieren
+        if len(row) == 0:
             continue
 
-        # Mitarbeiterzeile: Nachname, Vorname, Pensum
-        if len(row) == 3 and row[2].isdigit():
+        if len(row) == 3 and row[2].isdigit():                 # Mitarbeiterzeile: Nachname, Vorname, Pensum
             nachname = row[0]
             vorname = row[1]
             pensum = int(row[2])
@@ -51,7 +65,6 @@ def val_arbeitszeiten(reader):
                 return None
 
         else:
-            # Arbeitszeile ohne vorherige Person
             if aktuelle_person is None:
                 print("Arbeitszeile ohne Person:", row)
                 return None
@@ -60,47 +73,77 @@ def val_arbeitszeiten(reader):
             vorname = aktuelle_person[1]
 
             tag = row[0]
-            wochentage = ("Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag")
-            wochenende = ("Samstag", "Sonntag")
-            if tag in wochentage:
+
+
+            if tag in WOCHENTAGE:
                 pass
-            elif tag in wochenende:
-                print("ACHTUNG!: ", nachname, vorname, "hat am Wochenendtag:", tag, "gearbeitet!")
-                print()  # Leerzeile zur Trennung
-                # trotzdem weitergeben
+            elif tag in WOCHENENDE:                                      # Auch wenn am Wochenende gearbeitet wurde, Werte weitergeben!
+                print()             
+                print("ACHTUNG!: ", nachname, vorname, "hat am Wochenendtag:", tag, "gearbeitet!") 
+                print()  
+
             else:
                 print("Tag falsch bei", nachname, vorname, ":", tag)
                 return None
 
             if len(row) != 5:
-                print(
-                    "Falsche Anzahl Zeit-Einträge bei",
-                    nachname,
-                    vorname,
-                    "am",
-                    tag,
-                    ", erwartet sind 4 Einträge (Wenn kein Eintrag bitte '00.00' eingeben)")
+                print("Falsche Anzahl Zeit-Einträge bei", nachname, vorname, "am", tag, ", erwartet sind 4 Einträge (Wenn kein Eintrag bitte '00.00' eingeben)")
                 
                 return None
 
-            # row = [tag, eintritt, austritt, pause_start, pause_ende]
-            aktuelle_person[3].append(row)
+            tag, eintritt, pause_start, pause_ende, austritt = row
+            aktuelle_person[3].append([tag, eintritt, pause_start, pause_ende, austritt])
 
-            # alle Zeiten in dieser Zeile prüfen
-            for zeit in row[1:]:
+            zeiten = [eintritt, pause_start, pause_ende, austritt]
+
+            for zeit in zeiten:
                 if not ist_gueltige_zeit(zeit):
                     print("Zeit falsch bei", nachname, vorname, "am", tag, ":", zeit)
                     return None
 
+            
+            if (pause_start == "00.00") != (pause_ende == "00.00"):
+                print("Pause unvollständig bei", nachname, vorname, "am", tag)
+                return None  
+            
+            if eintritt == "00.00" and not (pause_start == "00.00" and pause_ende == "00.00" and austritt == "00.00"):
+                print("Eintritt fehlt bei", nachname, vorname, "am", tag)
+                return None
+            
+            if austritt == "00.00" and eintritt != "00.00":
+                print("Austritt fehlt bei", nachname, vorname, "am", tag)
+                return None
+
+
+            letzte = None
+            for zeit in zeiten:
+                if zeit == "00.00":
+                    continue
+
+                if letzte is not None and zeit < letzte:
+                    print("Anfangszeit später als Endzeit, bei", nachname, vorname, "am", tag)
+                    return None
+                
+                letzte = zeit
+
+
+
     return mitarbeiter
 
 
-def ist_gueltige_zeit(zeit):  # Check ob Zeiten möglich sind
+def ist_gueltige_zeit(zeit):
+    """
+    Diese Funktion überprüft, dass die Zeiten auch tatsächlich möglich sind 
+    und die richtige Länge haben. 
+    """
     teile = zeit.split(".")
     if len(teile) != 2:
         return False
+    if len(teile[0]) != 2 or len(teile[1]) != 2:
+        return False
     if not teile[0].isdigit() or not teile[1].isdigit():
         return False
+    
     stunden = int(teile[0])
     minuten = int(teile[1])
     if stunden < 0 or stunden > 23:
@@ -110,9 +153,15 @@ def ist_gueltige_zeit(zeit):  # Check ob Zeiten möglich sind
     return True
 
 
-# Methode für Berechnung der Arbeitseinträge der Mitarbeiter + Ausgabe der Werten in Konsole.
+
 def math_stundenrechnung(mitarbeiter):
-    #Validierung
+    """
+    Hier werden die übergebenen Daten verrechnet, um auf die Ziel-Werte zu kommen. 
+    Die Funktion zeit_zu_stunden wird aufgerufen, um die Zeiten auch miteinander verrechnen zu können. 
+    Damit man drucken kann, ob vertraglich abgemachte Rahmenbedingungen verletzt wurden, 
+    wird die Funktion vertragsbedingungen aufgerufen.
+    Die Übersicht wird in die Konsole gedruckt. 
+    """
     if mitarbeiter is None:
         print("Keine gültigen Mitarbeiterdaten übergeben. Berechnung abgebrochen.")
         return
@@ -125,8 +174,16 @@ def math_stundenrechnung(mitarbeiter):
         soll_zeit = 0.0
         differenz_std = 0.0
 
+        WOCHENENDE = ("Samstag", "Sonntag")
+        hat_wochenende = False
+
         for tag, eintritt, pause_start, pause_ende, austritt in tage:
-            # Zeiten von "HH.MM" in Stunden umrechnen
+            if eintritt == "00.00" and pause_start == "00.00" and pause_ende == "00.00" and austritt == "00.00":
+                continue
+
+            if tag in WOCHENENDE:
+                hat_wochenende = True
+
             eintritt_h = zeit_zu_stunden(eintritt)
             pause_start_h = zeit_zu_stunden(pause_start)
             pause_ende_h = zeit_zu_stunden(pause_ende)
@@ -154,72 +211,72 @@ def math_stundenrechnung(mitarbeiter):
             print(f"  Differenz-Zeit:            {differenz_std:.2f} h")
         print(f"  Pausenstunden gesamt:      {gesamt_pausen:.2f} h")
 
-        verletzung = vertragsbedingungen(gesamt_effektiv, gesamt_pausen, pensum, tag)
+        verletzung = vertragsbedingungen(gesamt_effektiv, gesamt_pausen, pensum, hat_wochenende)
         if verletzung:
             print("  -> Vertragsbedingungen: VERLETZT")
             print("  -> Begründung: ")
-            print("  ->",', '.join(map(str, verletzung[1])))
+            print("  ->" , ", ".join(map(str, verletzung[1])))
         else:
             print("  -> Vertragsbedingungen: OK")
-        print()  # Leerzeile zur Trennung
+        print()
         print("-----------------------------------")    
-        print()  # Leerzeile zur Trennung
+        print()
 
 
-# Methode für Konvertierung der Werte 00.00 in 0.0 Stunden
+
 def zeit_zu_stunden(zeit_str):
+    """
+    Damit man mit den Zeiten rechnen kann, werden sie in dieser Funktion, zu Industrie-Stunden verrechnet. 
+    """
     stunden_str, minuten_str = zeit_str.split(".")
     stunden = int(stunden_str)
     minuten = int(minuten_str)
     return stunden + minuten / 60.0
 
-# Methode für Überprüfung ob Rahmenmbedingungen eines Vertrages gebrochen wurden.
-def vertragsbedingungen(gesamt_effektiv, gesamt_pausen, pensum,tag):
-    # Max-Werte pro Woche
-    max_stunden = 48.0  #Max Stunden Anzahl -> Validierungsvariable
-    max_pausen_anzahl = 5.0  #Max Pausen Anzahl -> Validierungsvariable
+
+def vertragsbedingungen(gesamt_effektiv, gesamt_pausen, pensum, hat_wochenende):
+    """
+    Diese Funktion ist dazu da, dass man überprüft, ob und welche Rahmenbedingungen verletzt wurden und dies an die Stundenrechnung zurückgeben kann.
+    """
+    max_stunden = 48.0               #Max Stunden Anzahl -> Validierungsvariable
+    max_pausen_anzahl = 5.0          #Max Pausen Anzahl -> Validierungsvariable
     
-    # Pensum in Prozent
     pensum_faktor = pensum / 100.0
     
-    # tuple für Überprüfung von wert variable tag
-    wochenende = ("Samstag", "Sonntag")
-    loop = 0
+
+    begründung = [] 
+
+    if gesamt_effektiv > max_stunden * pensum_faktor:
+        begründung.append("Unerlaubte Überstunden")
+
+    if gesamt_pausen > max_pausen_anzahl:
+        begründung.append("Unerlaubte Pausenstunden")
+
+    if hat_wochenende:
+        begründung.append("Unerlaubte Wochenendarbeit")
+
+    if begründung:
+        return True, begründung
     
-    # Case 1: Effektive Arbeitsstunden sind grösser als Max erlaubte Stunden anhand Pensumfaktor
-    # Case 2: Pausenstunden sind grösser als Max erlaubte Pausen Anzahl
-    # Case 3: Variable tag beinhaltet Samstag oder Sonntag
-    while loop <= 3:
-        begründung = []
-        if (gesamt_effektiv > max_stunden * pensum_faktor):
-            begründung.append("Unerlaubte Überstunden")
-            loop + 1
-        if(gesamt_pausen > max_pausen_anzahl):
-            begründung.append("Unerlaubte Pausenstunde")
-            loop + 1
-        if(tag in wochenende):
-            begründung.append("Unerlaubte Wochenendarbeit")
-            loop + 1
-        else:
-            loop = 3
-            return False
-        return True,begründung
+    return False
+
+
    
 
 
-# Run
+
 if __name__ == "__main__":
-    #CSV-Pfad eintragen
+
     csv_file = input("Bitte Dateipfad der CSV Datei eingeben, welche ausgewertet werden soll: ")
     datapoints = read_csv_input(csv_file)
 
     if datapoints is not None:
-        print()  # Leerzeile zur Trennung
-        print()  # Leerzeile zur Trennung
+        print()  
+        print()  
         print("Übersicht:")
         print("-----------------------------------")  
-        print()  # Leerzeile zur Trennung
+        print()  
         math_stundenrechnung(datapoints)
         print("Ende der Liste")
     else:
-        print("Keine Daten eingelesen – keine Berechnung möglich.")
+        print("Keine Daten eingelesen → keine Berechnung möglich.")
